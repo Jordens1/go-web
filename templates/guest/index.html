@@ -1,4 +1,4 @@
-{{ define "guest/inde.html"}}
+{{ define "guest/index.html"}}
 
 <!DOCTYPE html>
 
@@ -15,6 +15,17 @@
     <p>
         {{.another.Desc}}
     </p>
+    <!-- 表单 -->
+    <!-- <form action="/post/doAddUser" method="post"> -->
+    <form action="/post/doAddUser/withStruct" method="post">
+    <!-- <form action="/post/xml/bind" method="post"> -->
+
+        用户名：<input type="text" name="username" id=""><br><br>
+        密码：<input type="text" name="passwd" id=""><br><br>
+        新名字: <input type="text" name="name" id=""><br><br>
+        新xml: <input type="text" name="title" id=""><br><br>
+        <input type="submit" name="" id="" value="提交">
+    </form>
 </body>
 </html>
 
