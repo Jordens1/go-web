@@ -3,7 +3,10 @@ package admin
 import (
 	"log"
 	"net/http"
+	"os"
 	"path"
+	"strconv"
+	"time"
 
 	"github.com/Jordens1/go-web/utils/model"
 	"github.com/gin-gonic/gin"
@@ -52,23 +55,45 @@ func (uc *UserController) UserAddUploadMutil(c *gin.Context) {
 	username := c.PostForm("username")
 	file, err := c.FormFile("face")
 	filename := file.Filename
+	abs_path := "./static/upload/mutil/"
+
 	if err == nil {
 		dst := path.Join("./static/upload", filename)
 		c.SaveUploadedFile(file, dst)
 	}
 
 	// 不同名字的文件,再写一遍单文件的上传方式
-	file2, err := c.FormFile("face2")
-	filename2 := file2.Filename
+	// 增加文件名的生成
+	file1, err := c.FormFile("face")
+	filename1 := file1.Filename
 	if err == nil {
-		dst := path.Join("./static/upload", filename2)
-		c.SaveUploadedFile(file2, dst)
+		allowMap := map[string]bool{
+			".jpg":  true,
+			".png":  true,
+			".gif":  true,
+			".jpeg": true,
+		}
+		extName := path.Ext(filename1)
+		if _, ok := allowMap[extName]; !ok {
+			c.JSON(http.StatusOK, gin.H{"success": 400})
+
+			return
+		}
+		day := model.GetDay()
+		err = os.Mkdir(path.Join(abs_path, day), 0666)
+		if err != nil {
+
+			c.String(200, err.Error())
+			return
+		}
+		save_file := strconv.FormatInt(time.Now().Unix(), 10) + extName
+		dst := path.Join(abs_path, day, save_file)
+		c.SaveUploadedFile(file1, dst)
 	}
 
 	// 相同名字的文件上传
 	form, _ := c.MultipartForm()
 	files := form.File["face2"]
-	abs_path := "./static/upload/mutil/"
 	for _, file := range files {
 		log.Println(file.Filename)
 		c.SaveUploadedFile(file, path.Join(abs_path, file.Filename))

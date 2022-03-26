@@ -4,18 +4,12 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"time"
 
 	"github.com/Jordens1/go-web/middleware"
 	"github.com/Jordens1/go-web/routers"
+	"github.com/Jordens1/go-web/utils/model"
 	"github.com/gin-gonic/gin"
 )
-
-// 模板函数的实现
-func UnixToTime(ts int) string {
-	t := time.Unix(int64(ts), 0)
-	return t.Format("2006-01-02 15:04:05")
-}
 
 func main() {
 	// 该方法已经含有了两个默认的中间件,不想使用的话,可以用 gin.New()
@@ -26,7 +20,7 @@ func main() {
 
 	// 自定义模板函数,直接在模板中调用
 	r.SetFuncMap(template.FuncMap{
-		"UnixToTime": UnixToTime,
+		"UnixToTime": model.UnixToTime,
 	})
 
 	// 加载模板路径
