@@ -11,7 +11,12 @@ import (
 type FormController struct{}
 
 func (uc *FormController) GetForm(c *gin.Context) {
-	c.HTML(http.StatusOK, "guest/index.html", gin.H{})
+	name := c.Param("name")
+	if name == "mutil" {
+		c.HTML(http.StatusOK, "admin/userAddMutil.html", gin.H{})
+	} else {
+		c.HTML(http.StatusOK, "admin/userAdd.html", gin.H{})
+	}
 }
 
 func (uc *FormController) GetFormBind(c *gin.Context) {

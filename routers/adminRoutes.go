@@ -26,13 +26,18 @@ func AdminRoutersInit(r *gin.Engine) {
 		// post，数据字段和index.html的表单对应
 		adminRouters.POST("/user/add", uc.UserAdd)
 
+		// post，数据字段和index.html的表单对应,文件上传
+		adminRouters.POST("/user/add/upload", uc.UserAddUpload)
 		// get方法,显示表单
 		adminRouters.GET("/user/edit", func(c *gin.Context) {
 			c.String(200, "用户列表-edit")
 		})
 
+		// post，数据字段和index.html的表单对应,多文件上传
+		adminRouters.POST("/user/add/upload/mutil", uc.UserAddUploadMutil)
+
 		// get方法,显示表单
-		adminRouters.GET("/get/form", fc.GetForm)
+		adminRouters.GET("/get/form/:name", fc.GetForm)
 
 		// 获取表单的数据绑定到结构体上
 		adminRouters.GET("/get/form/bind", fc.GetFormBind)
