@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"fmt"
+
 	"github.com/Jordens1/go-web/controllers/admin"
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +16,9 @@ func AdminRoutersInit(r *gin.Engine) {
 	{
 
 		// get方法,显示表单
-		adminRouters.GET("/", uc.UserIndex)
+		adminRouters.GET("/", func(ctx *gin.Context) {
+			fmt.Println("xishi")
+		}, uc.UserIndex)
 
 		// get方法,显示表单
 		adminRouters.GET("/user", uc.UserList)
