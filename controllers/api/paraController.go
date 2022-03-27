@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,4 +25,28 @@ func (ac *ApiController) ParaUid(c *gin.Context) {
 		})
 	}
 
+}
+
+// 演示使用session
+func (ac *ApiController) GetSession1(c *gin.Context) {
+	// 设置session,并且保存
+	session := sessions.Default(c)
+	session.Set("sessionName", "cookie1")
+	// 设置过期时间
+	session.Options(sessions.Options{MaxAge: 3600 * 6})
+	session.Save()
+
+	c.String(200, "yes")
+
+}
+
+func (ac *ApiController) GetSession2(c *gin.Context) {
+
+	// session获取
+	session := sessions.Default(c)
+	sesssionName := session.Get("sessionName")
+	// c.JSON(200, gin.H{
+	// 	"sessionName": sesssionName,
+	// })
+	c.String(200, "woshi :%v", sesssionName)
 }

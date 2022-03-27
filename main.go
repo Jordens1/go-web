@@ -5,9 +5,12 @@ import (
 	"html/template"
 	"net/http"
 
+	"github.com/Jordens1/go-web/config"
 	"github.com/Jordens1/go-web/middleware"
 	"github.com/Jordens1/go-web/routers"
 	"github.com/Jordens1/go-web/utils/model"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +28,13 @@ func main() {
 
 	// 加载模板路径
 	r.LoadHTMLGlob("templates/**/*")
+
+	// 配置session中间件,是基于cookie的储存引擎
+	// store := cookie.NewStore([]byte("secret"))
+	// r.Use(sessions.Sessions("mysession", store))
+	// 基于redis
+	store, _ := redis.NewStore(10, "tcp", config.RedisCoon, "", []byte("secret"))
+	r.Use(sessions.Sessions("mysession", store))
 
 	// 全局中间件
 	// r.Use(InitMiddleware, InitMiddleware2)

@@ -12,7 +12,9 @@ func ApiRoutersInit(r *gin.Engine) {
 	apiRouters := r.Group("/api", middleware.InitMiddleware3)
 	{
 		// get动态路由
-		apiRouters.GET("/para/:uid", ac.ParaUid)
+		apiRouters.GET("/para/uid/:uid", ac.ParaUid)
+		apiRouters.GET("/para/session1", ac.GetSession1)
+		apiRouters.GET("/para/session2", ac.GetSession2)
 
 	}
 
