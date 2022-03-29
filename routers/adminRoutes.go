@@ -24,7 +24,7 @@ func AdminRoutersInit(r *gin.Engine) {
 		adminRouters.GET("/user", uc.UserList)
 
 		// post，数据字段和index.html的表单对应
-		adminRouters.POST("/user/add", uc.UserAdd)
+		adminRouters.GET("/user/add", uc.UserAdd)
 
 		// post，数据字段和index.html的表单对应,文件上传
 		adminRouters.POST("/user/add/upload", uc.UserAddUpload)

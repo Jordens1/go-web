@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Jordens1/go-web/utils/engine"
 	"github.com/Jordens1/go-web/utils/model"
 	"github.com/gin-gonic/gin"
 )
@@ -19,13 +20,31 @@ func (uc *UserController) UserIndex(c *gin.Context) {
 }
 
 func (uc *UserController) UserList(c *gin.Context) {
-	c.String(200, "用户列表")
+
+	// 查询数据库
+	userList := []model.User{}
+	// engine.DB.Find(&userList)
+	engine.DB.Where("age > 20").Find(&userList)
+	c.JSON(200, gin.H{
+		"res": userList,
+	})
 }
 
 func (uc *UserController) UserAdd(c *gin.Context) {
 	username := c.PostForm("username")
 	pass := c.DefaultPostForm("passwd", "woshishei")
 	id := c.DefaultPostForm("id", "12")
+
+	// 数据的插入
+	user := model.User{
+		Id:       11,
+		Username: "xishi",
+		Age:      12,
+		Email:    "111@qq.com",
+		AddTime:  int(time.Now().Unix()),
+	}
+	engine.DB.Create(&user)
+
 	c.JSON(http.StatusOK, gin.H{
 		"name": username,
 		"pass": pass,

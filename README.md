@@ -11,4 +11,8 @@ fresh
 
 #### session
 go get github.com/gin-contrib/sessions
+#### mysql 
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/sqlite
+
 ```
