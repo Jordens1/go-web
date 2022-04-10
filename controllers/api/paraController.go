@@ -3,6 +3,7 @@ package api
 import (
 	"net/http"
 
+	"github.com/Jordens1/go-web/utils/bingfa"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
@@ -49,4 +50,9 @@ func (ac *ApiController) GetSession2(c *gin.Context) {
 	// 	"sessionName": sesssionName,
 	// })
 	c.String(200, "woshi :%v", sesssionName)
+}
+
+func (ac *ApiController) Test1(c *gin.Context) {
+	bingfa.BufferChannel()
+	c.String(200, "ok")
 }

@@ -16,6 +16,7 @@ func ApiRoutersInit(r *gin.Engine) {
 		apiRouters.GET("/para/session1", ac.GetSession1)
 		apiRouters.GET("/para/session2", ac.GetSession2)
 
+		apiRouters.GET("/go/routine1", ac.Test1)
 	}
 
 }
